@@ -10,7 +10,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "deploy": "git subtree push --prefix public/ origin gh-pages"
+    "deploy": "git subtree push --prefix public/ origin gh-pages",
+    "tiles": "tile-extruder --tileWidth 8 --tileHeight 8 --input ./public/assets/tiles.png --output ./public/assets/tiles-extruded.png"
   },
   "babel": {
     "presets": [
