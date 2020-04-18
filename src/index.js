@@ -6,6 +6,7 @@ import 'phaser';
 import Sfx from './plugins/Sfx.js';
 import Ambient from './plugins/Ambient.js';
 import LevelStats from './plugins/LevelStats.js';
+import SimplePlatformerControls from './plugins/SimplePlatformerControls.js';
 import Boot from './scenes/Boot.js';
 import Preloader from './scenes/Preloader.js';
 import Level from './scenes/Level.js';
@@ -47,7 +48,9 @@ let gameConfig = {
         }
     },
     plugins: {
-        scene: [],
+        scene: [
+            { key: 'simplePlatformerControls', plugin: SimplePlatformerControls, mapping: 'controls' },
+        ],
         global: [
             { key: 'sfx', plugin: Sfx, mapping: 'sfx', start: true },
             { key: 'ambient', plugin: Ambient, mapping: 'ambient', start: true },

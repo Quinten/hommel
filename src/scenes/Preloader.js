@@ -28,12 +28,12 @@ class Preloader extends Phaser.Scene {
         this.load.tilemapTiledJSON('map', 'assets/map.json');
         //this.load.image('tiles', 'assets/tiles.png');
         this.load.image('tiles', 'assets/tiles-extruded.png');
+        this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 32 });
         /*
         this.load.audio('music', 'assets/music.mp3');
         this.load.audioSprite('jump', 'assets/jump.json', 'assets/jump.mp3');
         */
         /*
-        this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 32 });
         */
     }
 
