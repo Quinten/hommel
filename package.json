@@ -1,11 +1,11 @@
 {
-  "name": "phaser-template",
+  "name": "hommel",
   "version": "0.0.1",
-  "title": "Phaser Template",
-  "shortName": "Phaser",
-  "description": "a vanilla phaser template",
-  "bgColor": "#000000",
-  "fgColor": "#ffffff",
+  "title": "Hommel",
+  "shortName": "Hommel",
+  "description": "Ludum Dare 46: Keep it alive",
+  "bgColor": "#FEFEFF",
+  "fgColor": "#283044",
   "author": "Quinten Clause",
   "scripts": {
     "start": "webpack-dev-server --mode development",
@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quinten/phaser-template.git"
+    "url": "git+https://github.com/Quinten/hommel.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Quinten/phaser-template/issues"
+    "url": "https://github.com/Quinten/hommel/issues"
   },
-  "homepage": "https://github.com/Quinten/phaser-template#readme",
+  "homepage": "https://github.com/Quinten/hommel#readme",
   "main": "src/index.js",
   "devDependencies": {
     "@babel/core": "^7.9.0",
