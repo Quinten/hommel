@@ -29,6 +29,9 @@ class Preloader extends Phaser.Scene {
         //this.load.image('tiles', 'assets/tiles.png');
         this.load.image('tiles', 'assets/tiles-extruded.png');
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.image('staminabar-outer', 'assets/staminabar-outer.png');
+        this.load.image('staminabar-center', 'assets/staminabar-center.png');
+        this.load.image('staminabar-inner', 'assets/staminabar-inner.png');
         /*
         this.load.audio('music', 'assets/music.mp3');
         this.load.audioSprite('jump', 'assets/jump.json', 'assets/jump.mp3');

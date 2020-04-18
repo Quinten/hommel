@@ -7,7 +7,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setDepth(2);
         this.setSize(16, 12, true);
-        this.setOffset(8, 20, true);
+        this.setOffset(8, 18, true);
         this.setCollideWorldBounds(true);
         this.body.allowGravity = true;
 
@@ -16,7 +16,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.speedChange = 8;
         this.maxFlyPower = 192;
         this.flyChange = 8;
-        this.stamina = 1500;
+        this.stamina = 4000;
+        this.minStamina = 4000;
+        this.maxStamina = 16000;
 
         // not tweakable
         this.facing = facing || 'right';
@@ -34,7 +36,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             { key: 'run-left', start: 0, end: 0 },
             { key: 'run-right', start: 1, end: 1 },
             { key: 'fly-left', start: 0, end: 0 },
-            { key: 'fly-right', start: 1, end: 1 }
+            { key: 'fly-right', start: 1, end: 1 },
+            { key: 'dead-left', start: 2, end: 2 },
+            { key: 'dead-right', start: 3, end: 3 }
         ];
         animations.forEach(this.addAnim.bind(this));
     }
@@ -55,8 +59,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update(controls, time, delta)
     {
         if (!this.alive) {
+            if (this.facing === 'left') {
+                this.ani = 'dead-left';
+            } else {
+                this.ani = 'dead-right';
+            }
+            this.anims.play(this.ani, true);
+            let onFloor = (this.body.onFloor() || this.body.touching.down);
+            if (onFloor) {
+                this.scene.gameOver();
+            }
             return;
         }
+
+        this.stamina = Math.max(this.minStamina, Math.min(this.maxStamina, Math.ceil(this.minStamina + ((this.maxStamina - this.minStamina) * (this.scene.points / this.scene.maxPoints)))));
 
         this.runAndFly(controls, time, delta);
 
@@ -90,7 +106,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         }
 
-        if (controls.aDown && this.flyTimer < this.stamina) {
+        if (controls.aDown && this.flyTimer < this.stamina && this.restTimer > 0) {
             this.flyPower += this.flyChange;
             if (this.flyPower > this.maxFlyPower) {
                 this.flyPower = this.maxFlyPower;
@@ -132,9 +148,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         } else {
 
-            if (this.flyTimer >= this.stamina) {
+            if (this.restTimer <= 0) {
                 this.restTimer = 0;
                 this.flyTimer = this.stamina;
+                this.alive = false;
             } else {
                 this.restTimer -= delta;
                 this.flyTimer += delta;
@@ -147,13 +164,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             }
 
         }
-    }
-
-    disappear()
-    {
-        this.alive = false;
-        this.visible = false;
-        this.body.enable = false;
     }
 }
 
