@@ -1,0 +1,69 @@
+import './styles.css';
+
+import config from '../package';
+
+import 'phaser';
+import Sfx from './plugins/Sfx.js';
+import Ambient from './plugins/Ambient.js';
+import LevelStats from './plugins/LevelStats.js';
+import Boot from './scenes/Boot.js';
+import Preloader from './scenes/Preloader.js';
+import Level from './scenes/Level.js';
+
+let prePreLoader = document.getElementById('loading');
+if (prePreLoader && prePreLoader.parentNode) {
+    prePreLoader.parentNode.removeChild(prePreLoader);
+}
+
+window.fadeColor = Phaser.Display.Color.HexStringToColor(config.bgColor);
+window.bgColor = Phaser.Display.Color.HexStringToColor(config.bgColor);
+window.fgColor = Phaser.Display.Color.HexStringToColor(config.fgColor);
+
+window.maxWidth = 320;
+window.maxHeight = 240;
+
+let wZoom = Math.max(1, Math.floor(window.innerWidth / window.maxWidth));
+let hZoom = Math.max(1, Math.floor(window.innerHeight / window.maxHeight));
+let zoom = Math.min(wZoom, hZoom);
+
+let gameConfig = {
+    type: Phaser.WEBGL,
+    audio: {
+        disableWebAudio: !(window.AudioContext || window.webkitAudioContext)
+    },
+    backgroundColor: config.bgColor,
+    pixelArt: true,
+    scale: {
+        mode: Phaser.Scale.NONE,
+        width: Math.ceil(window.innerWidth / zoom),
+        height: Math.ceil(window.innerHeight / zoom),
+        zoom: zoom
+    },
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 512 },
+            debug: false
+        }
+    },
+    plugins: {
+        scene: [],
+        global: [
+            { key: 'sfx', plugin: Sfx, mapping: 'sfx', start: true },
+            { key: 'ambient', plugin: Ambient, mapping: 'ambient', start: true },
+            { key: 'levelstats', plugin: LevelStats, mapping: 'levelstats', start: true }
+        ]
+    },
+    input: {
+        gamepad: true,
+        queue: true
+    },
+    scene: [
+        Boot,
+        Preloader,
+        Level
+    ]
+};
+
+// start game
+window.game = new Phaser.Game(gameConfig);

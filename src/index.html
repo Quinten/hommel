@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
+        <meta name="author" content="<%= htmlWebpackPlugin.options.author %>">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            :root {
+                --main-color: <%= htmlWebpackPlugin.options.fgColor %>;
+                --main-bg-color: <%= htmlWebpackPlugin.options.bgColor %>;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loading"></div>
+    </body>
+</html>
