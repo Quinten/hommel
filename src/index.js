@@ -3,6 +3,7 @@ import './styles.css';
 import config from '../package';
 
 import 'phaser';
+import DustPhaserPlugin from 'dust-phaser-plugin';
 import Sfx from './plugins/Sfx.js';
 import Ambient from './plugins/Ambient.js';
 import LevelStats from './plugins/LevelStats.js';
@@ -54,6 +55,7 @@ let gameConfig = {
     plugins: {
         scene: [
             { key: 'simplePlatformerControls', plugin: SimplePlatformerControls, mapping: 'controls' },
+            { key: 'DustPlugin', plugin: DustPhaserPlugin, mapping: 'dust' }
         ],
         global: [
             { key: 'sfx', plugin: Sfx, mapping: 'sfx', start: true },

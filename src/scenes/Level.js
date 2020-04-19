@@ -51,17 +51,50 @@ class Level extends Phaser.Scene {
         this.physics.add.collider(this.player, this.layer);
 
         // stamina bar
-        this.staminaBarOuter = this.add.image(this.scale.width / 2, 8, 'staminabar-outer');
+        this.staminaBarOuter = this.add.image(this.scale.width / 2, this.scale.height - 8, 'staminabar-outer');
         this.staminaBarOuter.setScrollFactor(0);
         this.staminaBarOuter.setDepth(4);
-        this.staminaBarCenter = this.add.image(this.scale.width / 2 - 78, 8, 'staminabar-center');
+        this.staminaBarCenter = this.add.image(this.scale.width / 2 - 78, this.scale.height - 8, 'staminabar-center');
         this.staminaBarCenter.setScrollFactor(0);
         this.staminaBarCenter.setDepth(4);
         this.staminaBarCenter.setOrigin(0, 0.5);
-        this.staminaBarInner = this.add.image(this.scale.width / 2 - 78, 8, 'staminabar-inner');
+        this.staminaBarInner = this.add.image(this.scale.width / 2 - 78, this.scale.height - 8, 'staminabar-inner');
         this.staminaBarInner.setScrollFactor(0);
         this.staminaBarInner.setDepth(4);
         this.staminaBarInner.setOrigin(0, 0.5);
+
+        this.flowerParticles = this.add.particles('particles');
+        this.flowerParticles.setDepth(1);
+        this.flowerParticlesEmitter = this.flowerParticles.createEmitter({
+            frame: [0, 1, 2, 3],
+            x: 200,
+            y: 300,
+            speed: { min: 32, max: 64},
+            angle: { min: 270, max: 270 },
+            scale: { start: 1, end: 1 },
+            alpha: { start: 1, end: 0 },
+            lifespan: 800,
+            gravityY: 0,
+            frequency: -1,
+            rotate: { min: 0, max: 0 }
+        });
+        this.flowerParticlesTimer = 2000;
+
+        this.groundParticles = this.add.particles('particles');
+        this.groundParticlesEmitter = this.groundParticles.createEmitter({
+            frame: [8, 9, 10, 11],
+            x: 200,
+            y: 300,
+            speed: { min: 96, max: 160},
+            angle: { min: 225, max: 315 },
+            scale: { start: 2, end: 0 },
+            lifespan: 1000,
+            gravityY: 250,
+            frequency: -1,
+            rotate: { min: -540, max: 540 }
+        });
+
+        this.dust.addOnePixelDust({ count: 36, alpha: 1 , tint: 0xffffff });
 
         this.ambient.play();
         this.cameras.main.flash(300, fadeColor.r, fadeColor.g, fadeColor.b);
@@ -83,18 +116,26 @@ class Level extends Phaser.Scene {
                 this.ambient.sounds.buzz.volume = Math.abs(this.player.body.velocity.y / this.player.maxFlyPower);
             }
         }
+        this.flowerParticlesEmitter.setPosition(this.player.x - 4 + Math.floor(Math.random() * 9), this.player.y);
+        if (this.flowerParticlesTimer > 1000) {
+            this.flowerParticlesEmitter.stop();
+        }
+        this.flowerParticlesTimer += delta;
     }
 
     resizeField(w, h)
     {
         if (this.staminaBarOuter) {
             this.staminaBarOuter.x = Math.round(w / 2);
+            this.staminaBarOuter.y = h - 8;
         }
         if (this.staminaBarCenter) {
             this.staminaBarCenter.x = Math.round(w / 2 - 78);
+            this.staminaBarCenter.y = h - 8;
         }
         if (this.staminaBarInner) {
             this.staminaBarInner.x = Math.round( w / 2 - 78);
+            this.staminaBarInner.y = h - 8;
         }
     }
 
@@ -117,7 +158,8 @@ class Level extends Phaser.Scene {
                 tile.index -= 1;
                 this.points += 1;
                 //this.cameras.main.shake(250, 0.03);
-                //console.log('juice1');
+                this.flowerParticlesTimer = 0;
+                this.flowerParticlesEmitter.flow(40, 1);
                 this.sfx.playUp('ping', 8);
             }
         });

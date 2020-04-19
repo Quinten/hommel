@@ -45,6 +45,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "dust-phaser-plugin": "0.0.3",
     "phaser": "^3.22.0"
   }
 }

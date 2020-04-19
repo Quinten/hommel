@@ -126,6 +126,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.wasFlying = false;
                 this.scene.cameras.main.shake(250, 0.03);
                 this.scene.sfx.play('hit');
+                this.scene.groundParticlesEmitter.explode(20, this.body.x + 8, this.body.bottom);
             }
 
             if (this.restTimer >= this.stamina) {

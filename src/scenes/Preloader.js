@@ -38,6 +38,7 @@ class Preloader extends Phaser.Scene {
         this.load.audioSprite('fail', 'assets/fail.json', 'assets/fail.mp3');
         this.load.audioSprite('success', 'assets/success.json', 'assets/success.mp3');
         this.load.audioSprite('hit', 'assets/hit.json', 'assets/hit.mp3');
+        this.load.spritesheet('particles', 'assets/particles.png', { frameWidth: 4, frameHeight: 4 });
         /*
         this.load.audio('music', 'assets/music.mp3');
         this.load.audioSprite('jump', 'assets/jump.json', 'assets/jump.mp3');
