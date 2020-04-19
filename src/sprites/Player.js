@@ -59,6 +59,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     update(controls, time, delta)
     {
         if (!this.alive) {
+            this.body.velocity.x = 0;
             if (this.facing === 'left') {
                 this.ani = 'dead-left';
             } else {
@@ -151,7 +152,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             if (this.restTimer <= 0) {
                 this.restTimer = 0;
                 this.flyTimer = this.stamina;
-                this.alive = false;
+                if (!this.scene.isRestarting) {
+                    this.alive = false;
+                }
             } else {
                 this.restTimer -= delta;
                 this.flyTimer += delta;

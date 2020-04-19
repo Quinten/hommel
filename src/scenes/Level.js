@@ -22,7 +22,6 @@ class Level extends Phaser.Scene {
         // start controls
         this.controls.start();
 
-        //this.levelText = this.add.dynamicBitmapText(0, 0, 'napie-eight-font', 'There will be levels soon');
 
         //let mapKey = levels[this.levelstats.currentLevel].map;
         let mapKey = 'map';
@@ -38,6 +37,11 @@ class Level extends Phaser.Scene {
 
         // all round collisions
         this.map.setCollision([64, 63, 62, 61, 56, 55, 54, 53, 43, 38, 33]);
+
+        // score
+        this.points = 0;
+        this.maxPoints = 100;
+        this.isRestarting = false;
 
         this.setObjectPositionsFromMap();
 
@@ -59,10 +63,7 @@ class Level extends Phaser.Scene {
         this.staminaBarInner.setDepth(4);
         this.staminaBarInner.setOrigin(0, 0.5);
 
-        // score
-        this.points = 0;
-        this.maxPoints = 100;
-        this.isRestarting = false;
+        this.ambient.play();
     }
 
     update(time, delta)
@@ -74,6 +75,12 @@ class Level extends Phaser.Scene {
         this.staminaBarInner.displayWidth = Math.min(Math.ceil(this.player.restTimer / this.player.stamina * this.staminaBarCenter.displayWidth), this.staminaBarCenter.displayWidth);
         if (this.player.stamina >= this.player.maxStamina) {
             this.gameComplete();
+        }
+
+        if (this.player.body.velocity.y < 0) {
+            if (this.ambient.sounds.buzz) {
+                this.ambient.sounds.buzz.volume = Math.abs(this.player.body.velocity.y / this.player.maxFlyPower);
+            }
         }
     }
 
@@ -101,14 +108,16 @@ class Level extends Phaser.Scene {
 
     playerTileCollision(tiles)
     {
-        if (!tiles || !tiles.length) {
+        if (!tiles || !tiles.length || !this.player.alive) {
             return;
         }
         tiles.forEach((tile) => {
             if (flowerTiles.indexOf(tile.index) > -1) {
                 tile.index -= 1;
                 this.points += 1;
+                this.cameras.main.shake(250, 0.03);
                 console.log('juice1');
+                this.sfx.play('ping', 7);
             }
         });
     }
@@ -118,6 +127,7 @@ class Level extends Phaser.Scene {
         if (!this.map) {
             return;
         }
+        this.maxPoints = 0;
         let layer = this.map.getLayer(0);
         layer.data.forEach((row) => {
             row.forEach((tile) => {
@@ -126,8 +136,12 @@ class Level extends Phaser.Scene {
                         this.startPoint = {x: tile.pixelX, y: tile.pixelY, facing: tile.properties.facing};
                     }
                 }
+                if (flowerTiles.indexOf(tile.index) > -1) {
+                    this.maxPoints += 1;
+                }
             });
         });
+        console.log(this.maxPoints);
     }
 
     gameOver() {
@@ -140,6 +154,7 @@ class Level extends Phaser.Scene {
         }, this);
         this.cameras.main.fadeOut(750, fadeColor.r, fadeColor.g, fadeColor.b);
         this.cameras.main.shake(250, 0.03);
+        this.ambient.stop();
         //this.sfx.play('fail');
     }
 
@@ -152,6 +167,7 @@ class Level extends Phaser.Scene {
             this.scene.restart();
         }, this);
         this.cameras.main.fadeOut(750, fadeColor.r, fadeColor.g, fadeColor.b);
+        this.ambient.stop();
         //this.sfx.play('success');
     }
 }

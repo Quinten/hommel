@@ -7,9 +7,8 @@ let savedSetting = localStorage.getItem(musicKey);
 if (savedSetting === 'off') {
     isOn = false;
 }
-let currentKey = -1;
 
-const keys = ['music', 'music2', 'music3'];
+const keys = ['buzz', 'eerie'];
 
 class Ambient extends Phaser.Plugins.BasePlugin
 {
@@ -26,28 +25,15 @@ class Ambient extends Phaser.Plugins.BasePlugin
         if (this.isPlaying) {
             return;
         }
-        currentKey++;
-        if (!this.allMusicLoaded || (currentKey >= keys.length)) {
-            currentKey = 0;
-        }
-        let key = keys[currentKey];
-        this.loop(key);
-    }
-
-    resume()
-    {
-        if (currentKey < 0 || currentKey >= keys.length) {
-            currentKey = 0;
-        }
-        let key = keys[currentKey];
-        this.loop(key);
+        keys.forEach((key) => {
+            this.loop(key);
+        });
+        this.isPlaying = true;
     }
 
     loop(key)
     {
         if (!this.sounds[key] && this.isOn) {
-            //console.log('loopedieloop');
-            //console.log(key);
             if (!this.game.cache.audio.exists(key)) {
                 return;
             }
@@ -55,15 +41,10 @@ class Ambient extends Phaser.Plugins.BasePlugin
             if (!this.sounds[key]) {
                 return;
             }
-            let looped = 0;
-            this.sounds[key].on('looped', () => {
-                looped++;
-                if (looped >= 2) {
-                    this.stop('opusmagnus');
-                }
-            });
             this.sounds[key].play({loop: true});
-            this.isPlaying = true;
+            if (key === 'buzz') {
+                this.sounds[key].volume = 0;
+            }
         }
     }
 
@@ -71,7 +52,6 @@ class Ambient extends Phaser.Plugins.BasePlugin
     {
         for (let oldKey in this.sounds) {
             if (oldKey !== skip && this.sounds[oldKey]) {
-                this.sounds[oldKey].off('looped');
                 this.sounds[oldKey].stop();
                 this.sounds[oldKey] = undefined;
             }
@@ -87,7 +67,7 @@ class Ambient extends Phaser.Plugins.BasePlugin
         isOn = value;
         localStorage.setItem(musicKey, (value) ? 'on' : 'off');
         if (value) {
-            this.resume();
+            this.play();
         } else {
             this.stop('opusmagnus');
         }
