@@ -34,12 +34,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         var animations = [
             { key: 'idle-left', start: 0, end: 0 },
             { key: 'idle-right', start: 1, end: 1 },
-            { key: 'run-left', start: 0, end: 0 },
-            { key: 'run-right', start: 1, end: 1 },
-            { key: 'fly-left', start: 0, end: 0 },
-            { key: 'fly-right', start: 1, end: 1 },
-            { key: 'dead-left', start: 2, end: 2 },
-            { key: 'dead-right', start: 3, end: 3 }
+            { key: 'run-left', start: 2, end: 4 },
+            { key: 'run-right', start: 5, end: 7 },
+            { key: 'fly-left', start: 8, end: 10 },
+            { key: 'fly-right', start: 11, end: 13 },
+            { key: 'dead-left', start: 14, end: 16 },
+            { key: 'dead-right', start: 17, end: 19 }
         ];
         animations.forEach(this.addAnim.bind(this));
     }

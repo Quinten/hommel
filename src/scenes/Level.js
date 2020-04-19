@@ -115,7 +115,7 @@ class Level extends Phaser.Scene {
             if (flowerTiles.indexOf(tile.index) > -1) {
                 tile.index -= 1;
                 this.points += 1;
-                this.cameras.main.shake(250, 0.03);
+                //this.cameras.main.shake(250, 0.03);
                 //console.log('juice1');
                 this.sfx.playUp('ping', 8);
             }
