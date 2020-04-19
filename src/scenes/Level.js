@@ -116,8 +116,8 @@ class Level extends Phaser.Scene {
                 tile.index -= 1;
                 this.points += 1;
                 this.cameras.main.shake(250, 0.03);
-                console.log('juice1');
-                this.sfx.play('ping', 7);
+                //console.log('juice1');
+                this.sfx.playUp('ping', 8);
             }
         });
     }
@@ -154,8 +154,7 @@ class Level extends Phaser.Scene {
         }, this);
         this.cameras.main.fadeOut(750, fadeColor.r, fadeColor.g, fadeColor.b);
         this.cameras.main.shake(250, 0.03);
-        this.ambient.stop();
-        //this.sfx.play('fail');
+        this.sfx.play('hit');
     }
 
     gameComplete() {
@@ -168,7 +167,7 @@ class Level extends Phaser.Scene {
         }, this);
         this.cameras.main.fadeOut(750, fadeColor.r, fadeColor.g, fadeColor.b);
         this.ambient.stop();
-        //this.sfx.play('success');
+        this.sfx.play('success');
     }
 }
 

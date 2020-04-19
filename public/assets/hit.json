@@ -1,0 +1,12 @@
+{
+  "resources": [
+    "assets/hit.mp3"
+  ],
+  "spritemap": {
+    "hit0": {
+      "start": 0,
+      "end": 1,
+      "loop": false
+    }
+  }
+}

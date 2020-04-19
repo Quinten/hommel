@@ -29,6 +29,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.flyPower = 0;
         this.flyTimer = 0;
         this.restTimer = this.stamina;
+        this.wasFlying = false;
 
         var animations = [
             { key: 'idle-left', start: 0, end: 0 },
@@ -121,6 +122,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         if (onFloor) {
 
+            if (this.wasFlying) {
+                this.wasFlying = false;
+                this.scene.cameras.main.shake(250, 0.03);
+                this.scene.sfx.play('hit');
+            }
+
             if (this.restTimer >= this.stamina) {
                 this.restTimer = this.stamina;
                 this.flyTimer = 0;
@@ -154,6 +161,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 this.flyTimer = this.stamina;
                 if (!this.scene.isRestarting) {
                     this.alive = false;
+                    this.scene.ambient.stop();
+                    this.scene.sfx.play('fail');
                 }
             } else {
                 this.restTimer -= delta;
@@ -165,6 +174,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.ani = 'fly-right';
             }
+
+            this.wasFlying = true;
 
         }
     }

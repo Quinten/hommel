@@ -1,0 +1,12 @@
+{
+  "resources": [
+    "assets/fail.mp3"
+  ],
+  "spritemap": {
+    "fail0": {
+      "start": 0,
+      "end": 5,
+      "loop": false
+    }
+  }
+}
