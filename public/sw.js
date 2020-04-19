@@ -1,5 +1,5 @@
-const PRECACHE = 'precache-v0.0.2';
-const RUNTIME = 'runtime-v0.0.2';
+const PRECACHE = 'precache-v0.0.3';
+const RUNTIME = 'runtime-v0.0.3';
 const PRECACHE_URLS = [
     './',
     'favicon-16x16.png',

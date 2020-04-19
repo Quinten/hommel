@@ -73,7 +73,7 @@ module.exports = (env, argv) => {
                 template: './src/index.html'
             }),
             new FaviconsWebpackPlugin({
-                logo: './src/icon.svg',
+                logo: './src/icon.png',
                 mode: 'webapp',
                 devMode: 'webapp',
                 prefix: '',
