@@ -17,7 +17,7 @@ class Level extends Phaser.Scene {
 
     create()
     {
-        //this.cameras.main.setRoundPixels(true);
+        this.cameras.main.setRoundPixels(true);
 
         // start controls
         this.controls.start();
@@ -47,7 +47,7 @@ class Level extends Phaser.Scene {
 
         // the player
         this.player = new Player(this, this.startPoint.x, this.startPoint.y, 'player', 0, this.startPoint.facing);
-        this.cameras.main.startFollow(this.player, false, 0.1);
+        this.cameras.main.startFollow(this.player, true, 0.5);
         this.physics.add.collider(this.player, this.layer);
 
         // stamina bar
