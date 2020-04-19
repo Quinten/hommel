@@ -16,9 +16,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.speedChange = 8;
         this.maxFlyPower = 192;
         this.flyChange = 8;
-        this.stamina = 2000;
-        this.minStamina = 2000;
-        this.maxStamina = 16000;
+        this.minStamina = 4000;
+        this.stamina = this.minStamina;
+        this.maxStamina = 24000;
 
         // not tweakable
         this.facing = facing || 'right';

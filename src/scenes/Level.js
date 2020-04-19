@@ -64,6 +64,7 @@ class Level extends Phaser.Scene {
         this.staminaBarInner.setOrigin(0, 0.5);
 
         this.ambient.play();
+        this.cameras.main.flash(300, fadeColor.r, fadeColor.g, fadeColor.b);
     }
 
     update(time, delta)
@@ -150,7 +151,7 @@ class Level extends Phaser.Scene {
         }
         this.isRestarting = true;
         this.cameras.main.once('camerafadeoutcomplete', (camera) => {
-            this.scene.restart();
+            this.scene.start('gameover');
         }, this);
         this.cameras.main.fadeOut(750, fadeColor.r, fadeColor.g, fadeColor.b);
         this.cameras.main.shake(250, 0.03);
@@ -163,7 +164,7 @@ class Level extends Phaser.Scene {
         }
         this.isRestarting = true;
         this.cameras.main.once('camerafadeoutcomplete', (camera) => {
-            this.scene.restart();
+            this.scene.start('win');
         }, this);
         this.cameras.main.fadeOut(750, fadeColor.r, fadeColor.g, fadeColor.b);
         this.ambient.stop();

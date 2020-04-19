@@ -10,6 +10,10 @@ import SimplePlatformerControls from './plugins/SimplePlatformerControls.js';
 import Boot from './scenes/Boot.js';
 import Preloader from './scenes/Preloader.js';
 import Level from './scenes/Level.js';
+import GameOver from './scenes/GameOver.js';
+import Win from './scenes/Win.js';
+import Title from './scenes/Title.js';
+import Instructions from './scenes/Instructions.js';
 
 let prePreLoader = document.getElementById('loading');
 if (prePreLoader && prePreLoader.parentNode) {
@@ -64,7 +68,11 @@ let gameConfig = {
     scene: [
         Boot,
         Preloader,
-        Level
+        Level,
+        GameOver,
+        Win,
+        Title,
+        Instructions
     ]
 };
 
